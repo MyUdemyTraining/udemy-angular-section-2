@@ -1,0 +1,18 @@
+<div class="container">
+    <div class="row mb-3">
+            <div class="col">
+                <input class="form-control" type="text" placeholder="server name">
+            </div>
+            <div class="col">
+                <input class="form-control" type="text" placeholder="server ip">
+            </div>
+            <div class="col">
+                <button class="btn btn-primary" [disabled]="!allowNewServer">Add Server</button>
+            </div>
+    </div>
+</div>
+
+
+<p>Server {{ serverID }} is {{ serverStatus}} at {{getServerIP()}}</p>
+
+<app-success></app-success>
