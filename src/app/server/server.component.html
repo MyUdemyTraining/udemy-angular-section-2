@@ -1,18 +1,28 @@
 <div class="container">
     <div class="row mb-3">
-            <div class="col">
-                <input class="form-control" type="text" placeholder="server name">
-            </div>
-            <div class="col">
-                <input class="form-control" type="text" placeholder="server ip">
-            </div>
-            <div class="col">
-                <button class="btn btn-primary" [disabled]="!allowNewServer">Add Server</button>
-            </div>
+        <div class="col">
+            <input 
+                class="form-control" 
+                type="text" 
+                placeholder="server name"
+                (input)="onUpdateServerName($event)">
+        </div>
+        <div class="col">
+            <input 
+                class="form-control" 
+                type="text" 
+                placeholder="server ip"
+                [(ngModel)]="serverIp">
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" 
+                   [disabled]="!allowNewServer"
+                   (click)="onServerCreatedClick()">Add Server</button>
+        </div>
+        <p>{{ serverCreateMessage }}</p>
     </div>
 </div>
 
-
 <p>Server {{ serverID }} is {{ serverStatus}} at {{getServerIP()}}</p>
 
-<app-success></app-success>
+<app-success [item]="serverCreateMessage">{{ serverCreateMessage }}</app-success>
