@@ -4,8 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { ServerComponent } from './server/server.component';
 import { ServersComponent } from './servers/servers.component';
-import { SuccessComponent } from './success/success.component';
-import { WarningComponent } from './warning/warning.component';
 import { HeaderComponent } from './header/header.component';
 import { NewServerComponent } from './new-server/new-server.component';
 
@@ -14,8 +12,6 @@ import { NewServerComponent } from './new-server/new-server.component';
     AppComponent,
     ServerComponent,
     ServersComponent,
-    SuccessComponent,
-    WarningComponent,
     HeaderComponent,
     NewServerComponent,
   ],

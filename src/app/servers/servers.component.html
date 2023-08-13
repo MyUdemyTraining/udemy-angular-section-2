@@ -1,21 +1,21 @@
 <div class="container mb-3">
-    <app-new-server></app-new-server>
-    <div class="border rounded p-3">
+    <app-new-server (serverAdded)="onServerCreated($event)"></app-new-server>
+    <div class="border rounded ps-3 pe-3">
         <div class="row fw-bold">
-            <div class="col col-xs-1">
+            <div class="col-2 border-end">
                 Server Id
             </div>
-            <div class="col col-xs-2">
+            <div class="col-3 border-end">
                 Server Name
             </div>
-            <div class="col col-xs-2">
+            <div class="col-3 border-end">
                 Server Ip Address
             </div>
-            <div class="col col-xs-9">
+            <div class="col-4">
                 Description
             </div>
         </div>
-        <hr>
+        <hr class="m-0">
         <app-server *ngFor="let server of serversList; let idx = index" [srvElement]="server">
         </app-server>
     </div>

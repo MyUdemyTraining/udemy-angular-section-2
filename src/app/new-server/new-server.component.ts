@@ -1,32 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { formatDate } from '@angular/common';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-new-server',
   templateUrl: './new-server.component.html',
 })
+
 export class NewServerComponent implements OnInit {
+  @Output() serverAdded = new EventEmitter<{serverName: string, serverIp: string, serverDesc: string}>();
+
+  format = 'MM/dd/yyyy';
+  locale = 'en-US';
+  
   frmServerName = ""
   frmServerIp   = ''
   frmServerId   = 1
+  frmServerDesc = `Server was added on ${formatDate(Date.now(), this.format, this.locale) }`
   frmServerStatus = 'UP'
   frmError = false
   frmHasValues = false;
   frmServerMessage = "Please enter new server details"
-  constructor() { }
 
+  regexIpV4 = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
+
+  // ---------------------------------------------------------------------
+  constructor() { }
   ngOnInit(): void {}
 
   // ---------------------------------------------------------------------
-  onResetInputs() {
+  onResetInputs(message?: string) {
     this.frmServerName = '';
     this.frmServerIp = '';
-    this.frmServerMessage = "Please enter new server details"
+    this.frmServerDesc = `Server was added on ${formatDate(Date.now(), this.format, this.locale) }`
+    if (message) {
+      this.frmServerMessage = message  
+    }
+    else {
+      this.frmServerMessage = "Please enter new server details"
+    }
     this.frmError = false
     this.frmHasValues = false;
   }
 
   // ---------------------------------------------------------------------
-  onAddServerClick() {
+  onAddServerClick(frmServerDescField: HTMLInputElement) {
     console.log("onAddServerClick")
     if (!this.fncHasValues()) { 
       console.log("onAddServerClick:Error:No values!")
@@ -43,17 +60,9 @@ export class NewServerComponent implements OnInit {
       return; 
     }
     
-    this.frmServerMessage = "Server was created." ;
-    this.frmError = false;
-    this.frmServerName = '';
-    this.frmServerIp = '';
-    this.frmError = false
-    //this.serversList.push(new ServerEntry(1, this.serverName, this.serverIp, "New server"))
-    // this.serverCreated = true
-    // this.serverCreateMessage = `Server was created = ${this.serverName} : ${this.serverIp}`
-    // this.serverError = false
-    // this.serverErrorMessage = ''
-    // this.onResetInputs()
+    this.serverAdded.emit({serverName: this.frmServerName, serverIp: this.frmServerIp, serverDesc: this.frmServerDesc});
+    console.log('onAddServerClick:serverAdded was emitted')
+    this.onResetInputs("Server was created.")
   }
 
   // ---------------------------------------------------------------------
@@ -66,14 +75,18 @@ export class NewServerComponent implements OnInit {
     this.frmServerIp = (<HTMLInputElement>event.target).value;
     this.frmHasValues = this.fncHasValues()
   }
+  onUpdateServerDesc(event: Event) {
+    this.frmServerDesc = (<HTMLInputElement>event.target).value;
+    this.frmHasValues = this.fncHasValues()
+  }
 
   // ---------------------------------------------------------------------
   getMessageClass() {
     if (this.frmError) {
-      return 'alert alert-danger  mt-2 ps-2 p-1 w-75';
+      return 'alert alert-danger  ps-2 p-1 w-75';
     }
     else {
-      return 'alert alert-success mt-2 ps-2 p-1 w-75';
+      return 'alert alert-success ps-2 p-1 w-75';
     }
   }  
 
