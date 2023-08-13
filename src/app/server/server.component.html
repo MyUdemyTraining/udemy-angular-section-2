@@ -1,1 +1,26 @@
-<p>{{ 'Server' }} with ID {{ serverId }} is {{ getServerStatus() }}</p>
+<div class="row">
+    <div class="col col-xs-1">
+        {{element.serverId}}
+    </div>
+    <div class="col col-xs-2">
+        {{element.serverName}}
+    </div>
+    <div class="col col-xs-2">
+        {{element.serverIp}}
+    </div>
+    <div class="col col-xs-9">
+        {{element.serverDesc}}
+    </div>
+</div>
+
+<!-- 
+<tr>
+  <td>{{element.serverId}}</td>
+  <td>{{element.serverName}}</td>
+  <td>{{element.serverIp}}</td>
+  <td>{{element.serverDesc}}</td>
+</tr>   
+ -->
+
+<!-- <p>{{ element.serverName }} with ID {{ element.serverId }} is {{ getServerStatus() }}</p> -->
+

@@ -1,47 +1,22 @@
 <div class="container mb-3">
-    <h4 class="text-center">Add a new server to the list</h4>
-    <div class="row ">
-        <div class="col">
-            <label class="fw-bold ps-2">Name:</label>
-            <input 
-                class="form-control" 
-                type="text" 
-                placeholder="server name"
-                [(ngModel)]="serverName"
-                (input)="onUpdateServerName($event)">
-            <label class="">{{serverName}}</label>
+    <app-new-server></app-new-server>
+    <div class="border rounded p-3">
+        <div class="row fw-bold">
+            <div class="col col-xs-1">
+                Server Id
+            </div>
+            <div class="col col-xs-2">
+                Server Name
+            </div>
+            <div class="col col-xs-2">
+                Server Ip Address
+            </div>
+            <div class="col col-xs-9">
+                Description
+            </div>
         </div>
-        <div class="col">
-            <label class="fw-bold ps-2">IP Address:</label>
-            <input 
-                class="form-control" 
-                type="text" 
-                placeholder="server ip"
-                [(ngModel)]="serverIp"
-                (input)="onUpdateServerIp($event)">
-            <label class="">{{serverIp}}</label>
-        </div>
-        <div class="col">
-            <br>
-            <button 
-                class="btn btn-primary" 
-                [disabled]="!allowNewServer"
-                (click)="onServerCreatedClick()">Add Server</button>
-            <button 
-                class="btn btn-primary ms-3" 
-                [disabled]="serverName+serverIp ===''"
-                (click)="onResetInputs()">Reset</button>
-        </div>
-        <div class="col">
-            <br>
-        </div>
+        <hr>
+        <app-server *ngFor="let server of serversList; let idx = index" [srvElement]="server">
+        </app-server>
     </div>
-
-    <!-- <p [ngStyle]="{backgroundColor: getServerStatusColor()}">Message ngStyle</p>  -->
-    <p [ngClass]="getServerInputClass()">Message ngClass</p>    
-
-    <!-- <app-success *ngIf="serverCreated" [item]="serverCreateMessage">{{ serverCreateMessage }}</app-success> -->
-    <!-- <app-warning *ngIf="serverError" [item]="serverErrorMessage">{{ serverErrorMessage }}</app-warning> -->
-    <hr>
-    <app-server *ngFor="let server of serversList">{{server}}</app-server>
 </div>

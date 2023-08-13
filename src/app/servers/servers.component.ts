@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ServerEntry } from '../models/server.model';
 
 @Component({
   selector: 'app-servers',
@@ -9,17 +10,7 @@ import { Component, OnInit } from '@angular/core';
 
 
 export class ServersComponent implements OnInit {
-    serverEntry = class {
-        serverName = ""
-        serverIp   = ''
-        serverID   = 1
-        serverStatus = 'UP'
-        constructor(serverId: number, serverName: string, serverIp: string) { 
-            this.serverID = serverId
-            this.serverName = serverName
-            this.serverIp = serverIp
-        }
-    }
+    serversList: ServerEntry[] = []
 
     allowNewServer = false;    
     serverCreateMessage = "Awaiting input"
@@ -28,7 +19,6 @@ export class ServersComponent implements OnInit {
     serverCreated = false
     serverError = false
 
-    serversList = ['Test1', 'Test2', 'Test3', 'Test4']
     serverName = ""
     serverIp   = ''
     serverID   = 1
@@ -37,8 +27,8 @@ export class ServersComponent implements OnInit {
     regexIpV4 = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/
   
   constructor() { 
-    //this.serversList.push(new this.serverEntry(1, "Test1", "192.168.0.1"))
-    //this.serversList.push(new this.serverEntry(2, "Test2", "192.168.0.2"))
+    this.serversList.push(new ServerEntry(1, "Test Server 1", "192.168.0.1", ""))
+    this.serversList.push(new ServerEntry(1, "Test Server 2", "192.168.0.2", ""))
   }
 
   ngOnInit(): void {
@@ -66,12 +56,12 @@ export class ServersComponent implements OnInit {
     this.serverErrorMessage  = ""
     this.serverCreated = false
     this.serverError = false
-}
+  }
 
   // ---------------------------------------------------------------------
   onServerCreatedClick() {
     console.log("onServerCreatedClick")
-    this.serversList.push(this.serverName)
+    this.serversList.push(new ServerEntry(1, this.serverName, this.serverIp, "New server"))
     this.serverCreated = true
     this.serverCreateMessage = `Server was created = ${this.serverName} : ${this.serverIp}`
     this.serverError = false
@@ -86,6 +76,7 @@ export class ServersComponent implements OnInit {
   }
   onUpdateServerIp(event: Event) {
     this.serverIp = (<HTMLInputElement>event.target).value;
+    console.log(`onUpdateServerIp: ${this.serverIp}`)
     if (!this.validateIPaddress(this.serverIp)) {
       this.serverError = true
       this.serverErrorMessage = "Server address - Invalid Format"
